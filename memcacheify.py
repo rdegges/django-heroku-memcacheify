@@ -1,10 +1,22 @@
 from os import environ
 
 
-# Some constant globals that memcached uses.
-MEMCACHE_PASSWORD = 'MEMCACHE_PASSWORD'
-MEMCACHE_SERVERS = 'MEMCACHE_SERVERS'
-MEMCACHE_USERNAME = 'MEMCACHE_USERNAME'
+# Memcache addon environment variables.
+# See: https://addons.heroku.com/memcache
+MEMCACHE_ENV_VARS = (
+    'MEMCACHE_PASSWORD',
+    'MEMCACHE_SERVERS',
+    'MEMCACHE_USERNAME',
+)
+
+
+# MemCachier addon environment variables.
+# See: https://addons.heroku.com/memcachier
+MEMCACHIER_ENV_VARS = (
+    'MEMCACHIER_PASSWORD',
+    'MEMCACHIER_SERVERS',
+    'MEMCACHIER_USERNAME',
+)
 
 
 def memcacheify():
@@ -19,20 +31,29 @@ def memcacheify():
     """
     caches = {}
 
-    if all((
-        environ.get(MEMCACHE_PASSWORD, ''),
-        environ.get(MEMCACHE_SERVERS, ''),
-        environ.get(MEMCACHE_USERNAME, '')
-    )):
+    if all((environ.get(e, '') for e in MEMCACHE_ENV_VARS)):
         caches['default'] = {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-            'LOCATION': 'localhost:11211',
-            'TIMEOUT': 500,
             'BINARY': True,
+            'LOCATION': 'localhost:11211',
             'OPTIONS': {
-                'tcp_nodelay': True,
                 'ketama': True,
-            }
+                'tcp_nodelay': True,
+            },
+            'TIMEOUT': 500,
+        }
+    elif all((environ.get(e, '') for e in MEMCACHIER_ENV_VARS)):
+        caches['default'] = {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'BINARY': True,
+            'LOCATION': environ.get('MEMCACHIER_SERVERS'),
+            'OPTIONS': {
+                'ketama': True,
+                'tcp_nodelay': True,
+            },
+            'PASSWORD': environ.get('MEMCACHIER_PASSWORD'),
+            'TIMEOUT': 500,
+            'USERNAME': environ.get('MEMCACHIER_USERNAME'),
         }
     else:
         caches['default'] = {

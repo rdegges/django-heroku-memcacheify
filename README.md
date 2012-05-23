@@ -25,9 +25,59 @@ CACHES = memcacheify()
 
 That's it.
 
-If you've got the [Heroku memcache addon](https://addons.heroku.com/memcache)
-installed for your app, Django will be automatically configured to use it. If
-not, you'll get the default local memory caching that Django offers.
+Assuming you have a memcache server available to your application on Heroku, it
+will instantly be available. If you have no memcache addon provisioned for your
+app, ``memcacheify`` will default to using local memory caching as a backup :)
+
+
+## Heroku Setup
+
+Now that you've got Django configured to use memcache, all you need to do is
+install one of the two excellent memcache addons that Heroku provides!
+
+- [Memcache](https://addons.heroku.com/memcache) - Been around longer, but
+  pretty expensive, or
+- [MemCachier](https://addons.heroku.com/memcachier) - Newer, less expensive.
+
+Let's say I want to install the ``memcachier`` addon, I could simply run:
+
+``` bash
+$ heroku addons:add memcachier:25
+$ heroku config
+...
+MEMCACHIER_SERVERS    => memcachier1.example.net
+MEMCACHIER_USERNAME   => bobslob
+MEMCACHIER_PASSWORD   => l0nGr4ndoMstr1Ngo5strang3CHaR4cteRS
+...
+```
+
+The example above will provision a *free* 25m memcache server for your
+application. Assuming everything worked, ``heroku config``'s output should show
+that you now have 3 new environment variables set.
+
+
+## Testing Your Cache
+
+If you don't trust me, and want to make sure your caching is working as
+expected, you may do the following:
+
+``` bash
+$ heroku run python manage.py shell
+Running python manage.py shell attached to terminal... up, run.1
+Python 2.7.2 (default, Oct 31 2011, 16:22:04)
+[GCC 4.4.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.core.cache import cache
+>>> cache.set('memcache', 'ify!')
+True
+>>> cache.get('memcache')
+'ify!'
+>>>
+```
+
+Assuming everything is working, you should be able to set and retrieve cache
+keys.
 
 
 ## References
@@ -36,6 +86,7 @@ If you're confused, you should probably read:
 
 - [Heroku's Getting Started Guide](http://devcenter.heroku.com/articles/django)
 - [Heroku's memcache Addon Documentation](https://devcenter.heroku.com/articles/memcache#using_memcache_from_python)
+- [Heroku's memcachier Addon Documentation](https://devcenter.heroku.com/articles/memcachier)
 
 
 ## Tests
@@ -57,3 +108,17 @@ Ran 13 tests in 0.166s
 
 OK
 ```
+
+
+## Changelog
+
+v0.2: 5-22-2012
+
+    - Adding support for memcachier Heroku addon.
+    - Updating documentation.
+    - Refactoring implementation for clarity.
+    - Adding better tests.
+
+v0.1: 5-2-2012
+
+    - Initial release!
