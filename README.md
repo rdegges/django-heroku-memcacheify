@@ -108,3 +108,17 @@ Ran 13 tests in 0.166s
 
 OK
 ```
+
+
+## Changelog
+
+v0.2: 5-22-2012
+
+    - Adding support for memcachier Heroku addon.
+    - Updating documentation.
+    - Refactoring implementation for clarity.
+    - Adding better tests.
+
+v0.1: 5-2-2012
+
+    - Initial release!
