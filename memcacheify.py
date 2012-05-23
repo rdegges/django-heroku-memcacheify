@@ -1,10 +1,13 @@
 from os import environ
 
 
-# Some constant globals that memcached uses.
-MEMCACHE_PASSWORD = 'MEMCACHE_PASSWORD'
-MEMCACHE_SERVERS = 'MEMCACHE_SERVERS'
-MEMCACHE_USERNAME = 'MEMCACHE_USERNAME'
+# Memcache addon environment variables.
+# See: https://addons.heroku.com/memcache
+MEMCACHE_ENV_VARS = (
+    'MEMCACHE_PASSWORD',
+    'MEMCACHE_SERVERS',
+    'MEMCACHE_USERNAME',
+)
 
 
 def memcacheify():
@@ -19,11 +22,7 @@ def memcacheify():
     """
     caches = {}
 
-    if all((
-        environ.get(MEMCACHE_PASSWORD, ''),
-        environ.get(MEMCACHE_SERVERS, ''),
-        environ.get(MEMCACHE_USERNAME, '')
-    )):
+    if all((environ.get(e, '') for e in MEMCACHE_ENV_VARS)):
         caches['default'] = {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
             'LOCATION': 'localhost:11211',
