@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="django-heroku-memcacheify : Automatic Django memcached configuration on Heroku." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>django-heroku-memcacheify</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/rdegges/django-heroku-memcacheify">View on GitHub</a>
+
+          <h1 id="project_title">django-heroku-memcacheify</h1>
+          <h2 id="project_tagline">Automatic Django memcached configuration on Heroku.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/rdegges/django-heroku-memcacheify/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/rdegges/django-heroku-memcacheify/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>django-heroku-memcacheify</h1>
+
+<p>Automatic Django memcached configuration on Heroku.</p>
+
+<p><img src="https://github.com/rdegges/django-heroku-memcacheify/raw/master/assets/memcacheify.jpg" alt="Deploying memcached is easy"></p>
+
+<h2>Install</h2>
+
+<p>To install <code>django-heroku-memcacheify</code>, simply run
+<code>pip install django-heroku-memcacheify</code> and you'll get the latest version
+installed automatically.</p>
+
+<h2>Usage</h2>
+
+<p>Modify your Django <code>settings.py</code> file, and set:</p>
+
+<div class="highlight">
+<pre><span class="kn">from</span> <span class="nn">memcacheify</span> <span class="kn">import</span> <span class="n">memcacheify</span>
+
+<span class="n">CACHES</span> <span class="o">=</span> <span class="n">memcacheify</span><span class="p">()</span>
+</pre>
+</div>
+
+
+<p>That's it.</p>
+
+<p>Assuming you have a memcache server available to your application on Heroku, it
+will instantly be available. If you have no memcache addon provisioned for your
+app, <code>memcacheify</code> will default to using local memory caching as a backup :)</p>
+
+<h2>Heroku Setup</h2>
+
+<p>Now that you've got Django configured to use memcache, all you need to do is
+install one of the two excellent memcache addons that Heroku provides!</p>
+
+<ul>
+<li>
+<a href="https://addons.heroku.com/memcache">Memcache</a> - Been around longer, but
+pretty expensive, or</li>
+<li>
+<a href="https://addons.heroku.com/memcachier">MemCachier</a> - Newer, less expensive.</li>
+</ul><p>Let's say I want to install the <code>memcachier</code> addon, I could simply run:</p>
+
+<div class="highlight">
+<pre><span class="nv">$ </span>heroku addons:add memcachier:25
+<span class="nv">$ </span>heroku config
+...
+<span class="nv">MEMCACHIER_SERVERS</span>    <span class="o">=</span>&gt; memcachier1.example.net
+<span class="nv">MEMCACHIER_USERNAME</span>   <span class="o">=</span>&gt; bobslob
+<span class="nv">MEMCACHIER_PASSWORD</span>   <span class="o">=</span>&gt; l0nGr4ndoMstr1Ngo5strang3CHaR4cteRS
+...
+</pre>
+</div>
+
+
+<p>The example above will provision a <em>free</em> 25m memcache server for your
+application. Assuming everything worked, <code>heroku config</code>'s output should show
+that you now have 3 new environment variables set.</p>
+
+<h2>Testing Your Cache</h2>
+
+<p>If you don't trust me, and want to make sure your caching is working as
+expected, you may do the following:</p>
+
+<div class="highlight">
+<pre><span class="nv">$ </span>heroku run python manage.py shell
+Running python manage.py shell attached to terminal... up, run.1
+Python 2.7.2 <span class="o">(</span>default, Oct 31 2011, 16:22:04<span class="o">)</span>
+<span class="o">[</span>GCC 4.4.3<span class="o">]</span> on linux2
+Type <span class="s2">"help"</span>, <span class="s2">"copyright"</span>, <span class="s2">"credits"</span> or <span class="s2">"license"</span> <span class="k">for </span>more information.
+<span class="o">(</span>InteractiveConsole<span class="o">)</span>
+&gt;&gt;&gt; from django.core.cache import cache
+&gt;&gt;&gt; cache.set<span class="o">(</span><span class="s1">'memcache'</span>, <span class="s1">'ify!'</span><span class="o">)</span>
+True
+&gt;&gt;&gt; cache.get<span class="o">(</span><span class="s1">'memcache'</span><span class="o">)</span>
+<span class="s1">'ify!'</span>
+&gt;&gt;&gt;
+</pre>
+</div>
+
+
+<p>Assuming everything is working, you should be able to set and retrieve cache
+keys.</p>
+
+<h2>References</h2>
+
+<p>If you're confused, you should probably read:</p>
+
+<ul>
+<li><a href="http://devcenter.heroku.com/articles/django">Heroku's Getting Started Guide</a></li>
+<li><a href="https://devcenter.heroku.com/articles/memcache#using_memcache_from_python">Heroku's memcache Addon Documentation</a></li>
+<li><a href="https://devcenter.heroku.com/articles/memcachier">Heroku's memcachier Addon Documentation</a></li>
+</ul><h2>Tests</h2>
+
+<p><a href="http://travis-ci.org/rdegges/django-heroku-memcacheify"><img src="https://secure.travis-ci.org/rdegges/django-heroku-memcacheify.png?branch=master" alt="Build Status"></a></p>
+
+<p>Want to run the tests? No problem:</p>
+
+<div class="highlight">
+<pre><span class="nv">$ </span>git clone git://github.com/rdegges/django-heroku-memcacheify.git
+<span class="nv">$ </span><span class="nb">cd </span>django-heroku-memcacheify
+<span class="nv">$ </span>python setup.py develop
+...
+<span class="nv">$ </span>pip install -r requirements.txt  <span class="c"># Install test dependencies.</span>
+<span class="nv">$ </span>nosetests
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 0.166s
+
+OK
+</pre>
+</div>
+
+
+<h2>Changelog</h2>
+
+<p>v0.2: 5-22-2012</p>
+
+<pre><code>- Adding support for memcachier Heroku addon.
+- Updating documentation.
+- Refactoring implementation for clarity.
+- Adding better tests.
+</code></pre>
+
+<p>v0.1: 5-2-2012</p>
+
+<pre><code>- Initial release!
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">django-heroku-memcacheify maintained by <a href="https://github.com/rdegges">rdegges</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
