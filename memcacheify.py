@@ -10,6 +10,15 @@ MEMCACHE_ENV_VARS = (
 )
 
 
+# MemCachier addon environment variables.
+# See: https://addons.heroku.com/memcachier
+MEMCACHIER_ENV_VARS = (
+    'MEMCACHIER_PASSWORD',
+    'MEMCACHIER_SERVERS',
+    'MEMCACHIER_USERNAME',
+)
+
+
 def memcacheify():
     """Return a fully configured Django ``CACHES`` setting. We do this by
     analyzing all environment variables on Heorku, scanning for an available
@@ -32,11 +41,19 @@ def memcacheify():
                 'tcp_nodelay': True,
             },
             'TIMEOUT': 500,
+        }
+    elif all((environ.get(e, '') for e in MEMCACHIER_ENV_VARS)):
+        caches['default'] = {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
             'BINARY': True,
+            'LOCATION': environ.get('MEMCACHIER_SERVERS'),
             'OPTIONS': {
-                'tcp_nodelay': True,
                 'ketama': True,
-            }
+                'tcp_nodelay': True,
+            },
+            'PASSWORD': environ.get('MEMCACHIER_PASSWORD'),
+            'TIMEOUT': 500,
+            'USERNAME': environ.get('MEMCACHIER_USERNAME'),
         }
     else:
         caches['default'] = {
