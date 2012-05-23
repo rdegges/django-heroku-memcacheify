@@ -29,3 +29,12 @@ class Memcacheify(TestCase):
         del environ['MEMCACHE_PASSWORD']
         del environ['MEMCACHE_SERVERS']
         del environ['MEMCACHE_USERNAME']
+
+    def test_uses_local_memory_backend_if_no_memcachier_addon_is_available(self):
+        environ['MEMCACHIER_PASSWORD'] = 'xxx'
+        environ['MEMCACHIER_SERVERS'] = 'mc1.ec2.memcachier.com'
+        self.assertEqual(memcacheify(), {'default':
+            {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'}
+        })
+        del environ['MEMCACHIER_PASSWORD']
+        del environ['MEMCACHIER_SERVERS']
