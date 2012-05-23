@@ -36,6 +36,7 @@ If you're confused, you should probably read:
 
 - [Heroku's Getting Started Guide](http://devcenter.heroku.com/articles/django)
 - [Heroku's memcache Addon Documentation](https://devcenter.heroku.com/articles/memcache#using_memcache_from_python)
+- [Heroku's memcachier Addon Documentation](https://devcenter.heroku.com/articles/memcachier)
 
 
 ## Tests
