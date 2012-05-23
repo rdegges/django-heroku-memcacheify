@@ -30,6 +30,32 @@ will instantly be available. If you have no memcache addon provisioned for your
 app, ``memcacheify`` will default to using local memory caching as a backup :)
 
 
+## Heroku Setup
+
+Now that you've got Django configured to use memcache, all you need to do is
+install one of the two excellent memcache addons that Heroku provides!
+
+- [Memcache](https://addons.heroku.com/memcache) - Been around longer, but
+  pretty expensive, or
+- [MemCachier](https://addons.heroku.com/memcachier) - Newer, less expensive.
+
+Let's say I want to install the ``memcachier`` addon, I could simply run:
+
+``` bash
+$ heroku addons:add memcachier:25
+$ heroku config
+...
+MEMCACHIER_SERVERS    => memcachier1.example.net
+MEMCACHIER_USERNAME   => bobslob
+MEMCACHIER_PASSWORD   => l0nGr4ndoMstr1Ngo5strang3CHaR4cteRS
+...
+```
+
+The example above will provision a *free* 25m memcache server for your
+application. Assuming everything worked, ``heroku config``'s output should show
+that you now have 3 new environment variables set.
+
+
 ## References
 
 If you're confused, you should probably read:
