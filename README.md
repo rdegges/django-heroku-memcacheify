@@ -25,9 +25,9 @@ CACHES = memcacheify()
 
 That's it.
 
-If you've got the [Heroku memcache addon](https://addons.heroku.com/memcache)
-installed for your app, Django will be automatically configured to use it. If
-not, you'll get the default local memory caching that Django offers.
+Assuming you have a memcache server available to your application on Heroku, it
+will instantly be available. If you have no memcache addon provisioned for your
+app, ``memcacheify`` will default to using local memory caching as a backup :)
 
 
 ## References
