@@ -56,6 +56,30 @@ application. Assuming everything worked, ``heroku config``'s output should show
 that you now have 3 new environment variables set.
 
 
+## Testing Your Cache
+
+If you don't trust me, and want to make sure your caching is working as
+expected, you may do the following:
+
+``` bash
+$ heroku run python manage.py shell
+Running python manage.py shell attached to terminal... up, run.1
+Python 2.7.2 (default, Oct 31 2011, 16:22:04)
+[GCC 4.4.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.core.cache import cache
+>>> cache.set('memcache', 'ify!')
+True
+>>> cache.get('memcache')
+'ify!'
+>>>
+```
+
+Assuming everything is working, you should be able to set and retrieve cache
+keys.
+
+
 ## References
 
 If you're confused, you should probably read:
