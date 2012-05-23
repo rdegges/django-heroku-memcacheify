@@ -25,7 +25,12 @@ def memcacheify():
     if all((environ.get(e, '') for e in MEMCACHE_ENV_VARS)):
         caches['default'] = {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'BINARY': True,
             'LOCATION': 'localhost:11211',
+            'OPTIONS': {
+                'ketama': True,
+                'tcp_nodelay': True,
+            },
             'TIMEOUT': 500,
             'BINARY': True,
             'OPTIONS': {
