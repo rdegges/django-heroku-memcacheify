@@ -46,8 +46,13 @@ class Memcacheify(TestCase):
 
         caches = memcacheify()
         self.assertEqual(caches['default']['BACKEND'], 'django_pylibmc.memcached.PyLibMCCache')
-        self.assertEqual(caches['default']['PASSWORD'], 'xxx')
-        self.assertEqual(caches['default']['USERNAME'], 'xxx')
+        self.assertEqual(environ['MEMCACHE_SERVERS'], environ['MEMCACHIER_SERVERS'])
+        self.assertEqual(environ['MEMCACHE_USERNAME'], environ['MEMCACHIER_USERNAME'])
+        self.assertEqual(environ['MEMCACHE_PASSWORD'], environ['MEMCACHIER_PASSWORD'])
+
         del environ['MEMCACHIER_PASSWORD']
         del environ['MEMCACHIER_SERVERS']
         del environ['MEMCACHIER_USERNAME']
+        del environ['MEMCACHE_PASSWORD']
+        del environ['MEMCACHE_SERVERS']
+        del environ['MEMCACHE_USERNAME']
