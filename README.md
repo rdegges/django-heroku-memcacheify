@@ -112,6 +112,10 @@ OK
 
 ## Changelog
 
+v0.3: 6-27-2012
+
+    - Fixing broken memcachier support.
+
 v0.2: 5-22-2012
 
     - Adding support for memcachier Heroku addon.

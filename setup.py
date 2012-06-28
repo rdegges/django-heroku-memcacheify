@@ -7,7 +7,7 @@ setup(
 
     # Basic package information:
     name = 'django-heroku-memcacheify',
-    version = '0.2',
+    version = '0.3',
     py_modules = ('memcacheify',),
 
     # Packaging options:
