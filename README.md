@@ -12,6 +12,11 @@ To install ``django-heroku-memcacheify``, simply run
 ``pip install django-heroku-memcacheify`` and you'll get the latest version
 installed automatically.
 
+**NOTE**: If you'd like to install this locally, you'll need to have the
+``libmemcached-dev`` libraries installed for this to compile properly. On
+Debian and Ubuntu you can install this by running ``sudo aptitude -y install
+libmemcached-dev``.
+
 
 ## Usage
 
@@ -23,7 +28,9 @@ from memcacheify import memcacheify
 CACHES = memcacheify()
 ```
 
-That's it.
+Next, edit your ``requirements.txt`` file (which Heroku reads) and add
+``pylibmc==1.2.3`` to the bottom of the file. This is required for Heroku to
+detect the necessary C dependencies and 'bootstrap' your application.
 
 Assuming you have a memcache server available to your application on Heroku, it
 will instantly be available. If you have no memcache addon provisioned for your
