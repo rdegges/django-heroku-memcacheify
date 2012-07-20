@@ -15,7 +15,8 @@ installed automatically.
 **NOTE**: If you'd like to install this locally, you'll need to have the
 ``libmemcached-dev`` libraries installed for this to compile properly. On
 Debian and Ubuntu you can install this by running ``sudo aptitude -y install
-libmemcached-dev``.
+libmemcached-dev``. If you're using a Mac, you can use
+[homebrew](http://mxcl.github.com/homebrew/) and run ``brew install libmemcached``.
 
 
 ## Usage
