@@ -43,13 +43,13 @@ def memcacheify():
             'TIMEOUT': 500,
         }
     elif all((environ.get(e, '') for e in MEMCACHIER_ENV_VARS)):
-        environ['MEMCACHE_SERVERS'] = environ.get('MEMCACHIER_SERVERS')
+        environ['MEMCACHE_SERVERS'] = environ.get('MEMCACHIER_SERVERS').replace(',', ';')
         environ['MEMCACHE_USERNAME'] = environ.get('MEMCACHIER_USERNAME')
         environ['MEMCACHE_PASSWORD'] = environ.get('MEMCACHIER_PASSWORD')
         caches['default'] = {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
             'BINARY': True,
-            'LOCATION': environ.get('MEMCACHIER_SERVERS'),
+            'LOCATION': environ.get('MEMCACHIER_SERVERS').replace(',', ';'),
             'OPTIONS': {
                 'ketama': True,
                 'tcp_nodelay': True,
