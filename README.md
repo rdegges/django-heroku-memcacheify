@@ -122,6 +122,11 @@ OK
 
 ## Changelog
 
+v0.4: 12-5-2012
+
+    - Update which allows memcachier users to support multiple servers >:)
+      Thanks @alexlod!
+
 v0.3: 6-27-2012
 
     - Fixing broken memcachier support.
