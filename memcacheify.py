@@ -19,7 +19,7 @@ MEMCACHIER_ENV_VARS = (
 )
 
 
-def memcacheify():
+def memcacheify(timeout=500):
     """Return a fully configured Django ``CACHES`` setting. We do this by
     analyzing all environment variables on Heorku, scanning for an available
     memcache addon, and then building the settings dict properly.
@@ -40,7 +40,7 @@ def memcacheify():
                 'ketama': True,
                 'tcp_nodelay': True,
             },
-            'TIMEOUT': 500,
+            'TIMEOUT': timeout,
         }
     elif all((environ.get(e, '') for e in MEMCACHIER_ENV_VARS)):
         environ['MEMCACHE_SERVERS'] = environ.get('MEMCACHIER_SERVERS').replace(',', ';')
@@ -54,7 +54,7 @@ def memcacheify():
                 'ketama': True,
                 'tcp_nodelay': True,
             },
-            'TIMEOUT': 500,
+            'TIMEOUT': timeout,
         }
     else:
         caches['default'] = {
