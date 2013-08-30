@@ -66,6 +66,17 @@ application. Assuming everything worked, ``heroku config``'s output should show
 that you now have 3 new environment variables set.
 
 
+## Local Development
+If you have a memcached server locally for development that doesn't support 
+authentication, you can still use memcache by setting an environment variable
+`MEMCACHEIFY_USE_LOCAL=True`.
+
+This will set the default cache to `django_pylibmc.memcached.PyLibMCCache`
+
+If there are no environment variables for memcache or memcacheify, the default 
+cache will be local memory `django.core.cache.backends.locmem.LocMemCache`.
+
+
 ## Testing Your Cache
 
 If you don't trust me, and want to make sure your caching is working as

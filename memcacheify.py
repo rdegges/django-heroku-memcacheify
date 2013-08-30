@@ -56,6 +56,10 @@ def memcacheify(timeout=500):
             },
             'TIMEOUT': timeout,
         }
+    elif environ.get('MEMCACHEIFY_USE_LOCAL', False):
+        caches['default'] = {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+        }
     else:
         caches['default'] = {
             'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
