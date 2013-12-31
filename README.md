@@ -133,6 +133,13 @@ OK
 
 ## Changelog
 
+v0.5: 12-31-2013
+
+    - Making the timeout option configurable.
+    - Removing Python 2.5 support.
+    - Adding an option to use memcached locally without SASL.
+    - Updating the README, explaining how to use memcached locally.
+
 v0.4: 12-5-2012
 
     - Update which allows memcachier users to support multiple servers >:)
