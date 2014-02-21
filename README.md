@@ -43,11 +43,10 @@ app, ``memcacheify`` will default to using local memory caching as a backup :)
 ## Heroku Setup
 
 Now that you've got Django configured to use memcache, all you need to do is
-install one of the two excellent memcache addons that Heroku provides!
+install one memcache addons that Heroku provides!
 
-- [Memcache](https://addons.heroku.com/memcache) - Been around longer, but
-  pretty expensive, or
-- [MemCachier](https://addons.heroku.com/memcachier) - Newer, less expensive.
+I personally recommend [MemCachier](https://addons.heroku.com/memcachier) --
+they're stable, cheap, great!
 
 Let's say I want to install the ``memcachier`` addon, I could simply run:
 
@@ -106,7 +105,6 @@ keys.
 If you're confused, you should probably read:
 
 - [Heroku's Getting Started Guide](http://devcenter.heroku.com/articles/django)
-- [Heroku's memcache Addon Documentation](https://devcenter.heroku.com/articles/memcache#using_memcache_from_python)
 - [Heroku's memcachier Addon Documentation](https://devcenter.heroku.com/articles/memcachier)
 
 
