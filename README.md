@@ -66,13 +66,13 @@ that you now have 3 new environment variables set.
 
 
 ## Local Development
-If you have a memcached server locally for development that doesn't support 
+If you have a memcached server locally for development that doesn't support
 authentication, you can still use memcache by setting an environment variable
 `MEMCACHEIFY_USE_LOCAL=True`.
 
 This will set the default cache to `django_pylibmc.memcached.PyLibMCCache`
 
-If there are no environment variables for memcache or memcacheify, the default 
+If there are no environment variables for memcache or memcacheify, the default
 cache will be local memory `django.core.cache.backends.locmem.LocMemCache`.
 
 
@@ -130,6 +130,10 @@ OK
 
 
 ## Changelog
+
+v0.6: 9-20-2014
+
+    - Upgrading dependencies.
 
 v0.5: 12-31-2013
 
