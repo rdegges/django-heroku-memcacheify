@@ -131,6 +131,10 @@ OK
 
 ## Changelog
 
+v0.7: 9-22-2014
+
+    - Upgrading dependencies (again)!
+
 v0.6: 9-20-2014
 
     - Upgrading dependencies.
