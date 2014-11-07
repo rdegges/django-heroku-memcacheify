@@ -72,7 +72,7 @@ def memcacheify(timeout=500):
         caches['default'] = {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
             'BINARY': True,
-            'LOCATION': environ.get('MEMCACHIER_SERVERS').replace(',', ';'),
+            'LOCATION': environ.get('MEMCACHEDCLOUD_SERVERS').replace(',', ';'),
             'OPTIONS': {
                 'ketama': True,
                 'tcp_nodelay': True,
