@@ -56,3 +56,21 @@ class Memcacheify(TestCase):
         del environ['MEMCACHE_PASSWORD']
         del environ['MEMCACHE_SERVERS']
         del environ['MEMCACHE_USERNAME']
+
+    def test_sets_proper_backend_when_memcachedcloud_addon_is_available(self):
+        environ['MEMCACHEDCLOUD_PASSWORD'] = 'xyz'
+        environ['MEMCACHEDCLOUD_SERVERS'] = 'zzzz'
+        environ['MEMCACHEDCLOUD_USERNAME'] = 'xyzzy'
+
+        caches = memcacheify()
+        self.assertEqual(caches['default']['BACKEND'], 'django_pylibmc.memcached.PyLibMCCache')
+        self.assertEqual(environ['MEMCACHE_SERVERS'], environ['MEMCACHEDCLOUD_SERVERS'])
+        self.assertEqual(environ['MEMCACHE_USERNAME'], environ['MEMCACHEDCLOUD_USERNAME'])
+        self.assertEqual(environ['MEMCACHE_PASSWORD'], environ['MEMCACHEDCLOUD_PASSWORD'])
+
+        del environ['MEMCACHEDCLOUD_PASSWORD']
+        del environ['MEMCACHEDCLOUD_SERVERS']
+        del environ['MEMCACHEDCLOUD_USERNAME']
+        del environ['MEMCACHE_PASSWORD']
+        del environ['MEMCACHE_SERVERS']
+        del environ['MEMCACHE_USERNAME']
