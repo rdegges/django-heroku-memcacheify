@@ -131,6 +131,10 @@ OK
 
 ## Changelog
 
+v0.8: 11-12-2014
+
+    - Adding support for memcachedcloud!
+
 v0.7: 9-22-2014
 
     - Upgrading dependencies (again)!
