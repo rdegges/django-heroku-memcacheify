@@ -19,6 +19,25 @@ MEMCACHIER_ENV_VARS = (
 )
 
 
+# Memcached Cloud
+# See: https://addons.heroku.com/memcachedcloud
+MEMCACHEDCLOUD_ENV_VARS = (
+    'MEMCACHEDCLOUD_PASSWORD',
+    'MEMCACHEDCLOUD_SERVERS',
+    'MEMCACHEDCLOUD_USERNAME',
+)
+
+# Memcache defaults
+# Both Memcachier and MemcacheCloud share these
+CACHE_DEFAULTS = {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'BINARY': True,
+            'OPTIONS': {
+                'ketama': True,
+                'tcp_nodelay': True,
+            },
+        }
+
 def memcacheify(timeout=500):
     """Return a fully configured Django ``CACHES`` setting. We do this by
     analyzing all environment variables on Heorku, scanning for an available
@@ -32,30 +51,28 @@ def memcacheify(timeout=500):
     caches = {}
 
     if all((environ.get(e, '') for e in MEMCACHE_ENV_VARS)):
-        caches['default'] = {
-            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-            'BINARY': True,
-            'LOCATION': 'localhost:11211',
-            'OPTIONS': {
-                'ketama': True,
-                'tcp_nodelay': True,
-            },
-            'TIMEOUT': timeout,
-        }
+        caches['default'] = CACHE_DEFAULTS
+        caches['default'].update({'LOCATION': 'localhost:11211',
+                                  'TIMEOUT': timeout,
+                                 })
     elif all((environ.get(e, '') for e in MEMCACHIER_ENV_VARS)):
-        environ['MEMCACHE_SERVERS'] = environ.get('MEMCACHIER_SERVERS').replace(',', ';')
+        servers = environ.get('MEMCACHIER_SERVERS').replace(',', ';')
+        environ['MEMCACHE_SERVERS'] = servers
         environ['MEMCACHE_USERNAME'] = environ.get('MEMCACHIER_USERNAME')
         environ['MEMCACHE_PASSWORD'] = environ.get('MEMCACHIER_PASSWORD')
-        caches['default'] = {
-            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-            'BINARY': True,
-            'LOCATION': environ.get('MEMCACHIER_SERVERS').replace(',', ';'),
-            'OPTIONS': {
-                'ketama': True,
-                'tcp_nodelay': True,
-            },
-            'TIMEOUT': timeout,
-        }
+        caches['default'] = CACHE_DEFAULTS
+        caches['default'].update({'LOCATION': servers,
+                                  'TIMEOUT': timeout,
+                                 })
+    elif all((environ.get(e, '') for e in MEMCACHEDCLOUD_ENV_VARS)):
+        servers = environ.get('MEMCACHEDCLOUD_SERVERS').replace(',', ';')
+        environ['MEMCACHE_SERVERS'] = servers
+        environ['MEMCACHE_USERNAME'] = environ.get('MEMCACHEDCLOUD_USERNAME')
+        environ['MEMCACHE_PASSWORD'] = environ.get('MEMCACHEDCLOUD_PASSWORD')
+        caches['default'] = CACHE_DEFAULTS
+        caches['default'].update({'LOCATION': servers,
+                                  'TIMEOUT': timeout,
+                                 })
     elif environ.get('MEMCACHEIFY_USE_LOCAL', False):
         caches['default'] = {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
