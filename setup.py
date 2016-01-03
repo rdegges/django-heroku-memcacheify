@@ -15,7 +15,7 @@ setup(
     include_package_data = True,
 
     # Package dependencies:
-    install_requires = ['django-pylibmc==0.5.0'],
+    install_requires = ['django-pylibmc>=0.6.1'],
 
     # Metadata for PyPI:
     author = 'Randall Degges',
