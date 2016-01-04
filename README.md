@@ -131,6 +131,12 @@ OK
 
 ## Changelog
 
+v1.0.0: Not yet released
+
+    - Update django-pylibmc dependency to >=0.6.1.
+    - Officially support Python 3.5.
+    - Stop testing on Python 2.6.
+
 v0.8: 11-12-2014
 
     - Adding support for memcachedcloud!
