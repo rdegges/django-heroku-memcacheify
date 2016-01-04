@@ -120,6 +120,7 @@ $ cd django-heroku-memcacheify
 $ python setup.py develop
 ...
 $ pip install -r requirements.txt  # Install test dependencies.
+$ flake8
 $ nosetests
 .............
 ----------------------------------------------------------------------
