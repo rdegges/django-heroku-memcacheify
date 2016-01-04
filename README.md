@@ -131,7 +131,7 @@ OK
 
 ## Changelog
 
-v1.0.0: Not yet released
+v1.0.0: 01-04-2016
 
     - Update django-pylibmc dependency to >=0.6.1.
     - Officially support Python 3.5.
