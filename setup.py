@@ -7,7 +7,7 @@ setup(
 
     # Basic package information:
     name = 'django-heroku-memcacheify',
-    version = '0.8',
+    version = '1.0.0',
     py_modules = ('memcacheify',),
 
     # Packaging options:
@@ -23,6 +23,13 @@ setup(
     license = 'UNLICENSE',
     url = 'https://github.com/rdegges/django-heroku-memcacheify',
     keywords = 'django heroku cloud cache memcache memcached awesome epic',
+    classifiers=[
+        'Framework :: Django',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+    ],
     description = 'Automatic Django memcached configuration on Heroku.',
     long_description = open(normpath(join(dirname(abspath(__file__)),
         'README.md'))).read()
