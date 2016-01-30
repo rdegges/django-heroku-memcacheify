@@ -29,11 +29,9 @@ from memcacheify import memcacheify
 CACHES = memcacheify()
 ```
 
-Next, edit your ``requirements.txt`` file (which Heroku reads) and add
-``pylibmc==1.2.3`` to the bottom of the file. This is required for Heroku to
-detect the necessary C dependencies and 'bootstrap' your application. This requirement
-has to be in the root ``requirements.txt`` file, not in any imported requirements.
-([Solution from Stack Overflow](http://stackoverflow.com/questions/11507639/memcached-on-heroku-w-django-cant-install-pylibmc-memcacheify/11587142#11587142))
+Next, ensure pylibmc is present in your ``requirements.txt`` file (or one
+included from it), so the Heroku Python buildpack will detect the necessary
+C dependencies and 'bootstrap' your application.
 
 Assuming you have a memcache server available to your application on Heroku, it
 will instantly be available. If you have no memcache addon provisioned for your
