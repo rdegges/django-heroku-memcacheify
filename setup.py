@@ -32,6 +32,7 @@ setup(
     ],
     description='Automatic Django memcached configuration on Heroku.',
     long_description=open(normpath(join(dirname(abspath(__file__)),
-                                        'README.md'))).read()
+                                        'README.md'))).read(),
+    long_description_content_type='text/markdown'
 
 )
