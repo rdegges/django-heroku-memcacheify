@@ -130,6 +130,10 @@ OK
 
 ## Changelog
 
+v1.0.1: 10-10-2021
+
+    - Fixing PyPI description
+
 v1.0.0: 01-04-2016
 
     - Update django-pylibmc dependency to >=0.6.1.
